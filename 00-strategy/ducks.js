@@ -1,6 +1,3 @@
-import { FlyNoWay, FlyWithWings } from "./behavior-fly.js";
-import { MuteQuack, Quack, Squeack } from "./behavior-quack.js";
-
 /**
  * @description Main class for Duck
  * @author Paul "Bargamut" Petrov
@@ -9,8 +6,16 @@ import { MuteQuack, Quack, Squeack } from "./behavior-quack.js";
  */
 class Duck {
 	constructor() {
-		this.flyBehavior = null;
-		this.quackBehavior = null;
+		this.flyBehaviorObj = null;
+		this.quackBehaviorObj = null;
+	}
+
+	set quackBehavior(quackBehaviorObject) {
+		if (quackBehaviorObject) this.quackBehaviorObj = quackBehaviorObject;
+	}
+
+	set flyBehavior(flyBehaviorObject) {
+		if (flyBehaviorObject) this.flyBehaviorObj = flyBehaviorObject;
 	}
 
 	display() {
@@ -22,13 +27,13 @@ class Duck {
 	}
 
 	performQuack() {
-		if (this.quackBehavior.quack instanceof Function) this.quackBehavior.quack();
-		else throw Error(`Can't find quackBehavior(): ${this.quackBehavior.quack}`);
+		if (this.quackBehaviorObj.quack instanceof Function) this.quackBehaviorObj.quack();
+		else throw Error(`Can't find quackBehavior(): ${this.quackBehaviorObj.quack}`);
 	}
 
 	performFly() {
-		if (this.flyBehavior.fly instanceof Function) this.flyBehavior.fly();
-		else throw Error(`Can't find flyBehavior(): ${this.flyBehavior.fly}`);
+		if (this.flyBehaviorObj.fly instanceof Function) this.flyBehaviorObj.fly();
+		else throw Error(`Can't find flyBehavior(): ${this.flyBehaviorObj.fly}`);
 	}
 }
 
@@ -42,9 +47,6 @@ class Duck {
 export class MallardDuck extends Duck {
 	constructor() {
 		super();
-
-		this.flyBehavior = new FlyWithWings();
-		this.quackBehavior = new Quack();
 	}
 
 	display() {
@@ -62,9 +64,6 @@ export class MallardDuck extends Duck {
 export class SqueackDuck extends Duck {
 	constructor() {
 		super();
-
-		this.flyBehavior = new FlyWithWings();
-		this.quackBehavior = new Squeack();
 	}
 
 	display() {
@@ -82,9 +81,6 @@ export class SqueackDuck extends Duck {
 export class DecoyDuck extends Duck {
 	constructor() {
 		super();
-
-		this.flyBehavior = new FlyNoWay();
-		this.quackBehavior = new MuteQuack();
 	}
 
 	display() {
